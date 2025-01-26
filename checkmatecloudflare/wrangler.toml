@@ -1,6 +1,6 @@
 name = "checkmate"
 type = "javascript"
 workers_dev = true
-main = "src/index.ts"
+main = "src/index.js"
 compatibility_date = "2025-01-26"
 
