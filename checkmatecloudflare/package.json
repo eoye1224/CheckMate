@@ -1,7 +1,7 @@
 {
   "name": "checkmate",
   "version": "0.0.0",
-  "homepage": "/checkmate/checkmatecloudflare/",
+  "homepage": "/",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250124.3",
     "react-scripts": "^5.0.1",

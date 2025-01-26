@@ -35,7 +35,7 @@ function App() {
 
   return (
     <Container className="mt-4">
-      <h1 className="text-center">ADHD-Friendly To-Do List</h1>
+      <h1 className="text-center">CheckMate</h1>
       <div className="text-center mb-3">
         <Button variant="secondary" onClick={() => setFilter('All')}>All</Button>
         <Button variant="secondary" onClick={() => setFilter('Completed')}>Completed</Button>
