@@ -58,16 +58,19 @@ function App() {
       <h2>Your Tasks:</h2>
       <ListGroup>
         {filteredTasks.map((taskObj, index) => (
-          <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center"
-            style={{ textDecoration: taskObj.completed ? 'line-through' : 'none' }}>
-            <Form.Check 
-              type="checkbox" 
-              checked={taskObj.completed} 
-              onChange={() => handleCompleteTask(index)} 
-              label={taskObj.task} 
-            />
-            <Button variant="danger" onClick={() => handleRemoveTask(index)}>Remove</Button>
-          </ListGroup.Item>
+          <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
+          <Form.Check 
+            type="checkbox" 
+            checked={taskObj.completed} 
+            onChange={() => handleCompleteTask(index)} 
+            label={
+              <span style={{ textDecoration: taskObj.completed ? 'line-through' : 'none' }}>
+                {taskObj.task}
+              </span>
+            } 
+          />
+          <Button variant="danger" onClick={() => handleRemoveTask(index)}>Remove</Button>
+        </ListGroup.Item>        
         ))}
       </ListGroup>
     </Container>
