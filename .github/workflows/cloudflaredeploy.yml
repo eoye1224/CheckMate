@@ -16,22 +16,22 @@ jobs:
 
     # Set working directory to the folder where Cloudflare files are located
     - name: Set working directory for Cloudflare deployment
-      run: cd CheckMateCloudFlare  # Update this to the correct folder path if needed
+      run: cd cloudflare/CheckMateCloudFlare  # Update this to the correct folder path if needed
 
     # Install dependencies (ensure package.json exists in CheckMateCloudFlare folder)
     - name: Install dependencies
       run: |
-        cd CheckMateCloudFlare
+        cd cloudflare/CheckMateCloudFlare
         npm install  # Make sure package.json is in this folder
 
     # Build the project
     - name: Build project
       run: |
-        cd CheckMateCloudFlare
+        cd cloudflare/CheckMateCloudFlare
         npm run build  # This command may need to be adjusted based on your build process
 
     # Deploy to Cloudflare
     - name: Deploy to Cloudflare
       run: |
-        cd CheckMateCloudFlare
+        cd cloudflare/CheckMateCloudFlare
         npx wrangler publish  # Make sure you have wrangler set up correctly in the folder
