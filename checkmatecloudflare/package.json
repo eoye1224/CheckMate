@@ -1,7 +1,6 @@
 {
   "name": "checkmate",
   "version": "0.0.0",
-<<<<<<< HEAD
   "homepage": "https://eoye1224.github.io/checkmate/",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250124.3",
@@ -9,16 +8,6 @@
     "typescript": "^5.7.3",
     "vitest": "^3.0.4",
     "wrangler": "3.105.1"
-=======
-  "homepage": ".",
-  "devDependencies": {
-    "@babel/preset-react": "^7.26.3",
-    "@cloudflare/workers-types": "^4.20250124.3",
-    "react-scripts": "^5.0.1",
-    "typescript": "^4.9.5",
-    "vitest": "^2.0.0",
-    "wrangler": "^3.105.1"
->>>>>>> features/task-display-and-function
   },
   "private": true,
   "scripts": {
@@ -26,7 +15,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-<<<<<<< HEAD
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -37,17 +25,6 @@
     "react-dom": "^17.0.0",
     "react-router-dom": "^7.1.3",
     "react-scripts": "^4.0.3"
-=======
-    "deploy": "wrangler deploy"
-  },
-  "dependencies": {
-    "bootstrap": "^5.3.3",
-    "react": "^19.0.0",
-    "react-bootstrap": "^2.10.8",
-    "react-confetti": "^6.2.2",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^5.1.0"
->>>>>>> features/task-display-and-function
   },
   "browserslist": {
     "production": [
