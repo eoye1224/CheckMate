@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/checkmate/checkmatecloudflare/static/css/main.d7827282.css",
-    "main.js": "/checkmate/checkmatecloudflare/static/js/main.a24782b3.js",
+    "main.css": "/checkmate/checkmatecloudflare/static/css/main.a85174c3.css",
+    "main.js": "/checkmate/checkmatecloudflare/static/js/main.a84dff19.js",
     "index.html": "/checkmate/checkmatecloudflare/index.html",
-    "main.d7827282.css.map": "/checkmate/checkmatecloudflare/static/css/main.d7827282.css.map",
-    "main.a24782b3.js.map": "/checkmate/checkmatecloudflare/static/js/main.a24782b3.js.map"
+    "main.a85174c3.css.map": "/checkmate/checkmatecloudflare/static/css/main.a85174c3.css.map",
+    "main.a84dff19.js.map": "/checkmate/checkmatecloudflare/static/js/main.a84dff19.js.map"
   },
   "entrypoints": [
-    "static/css/main.d7827282.css",
-    "static/js/main.a24782b3.js"
+    "static/css/main.a85174c3.css",
+    "static/js/main.a84dff19.js"
   ]
 }
