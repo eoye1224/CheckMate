@@ -3,7 +3,7 @@ name: Deploy to Cloudflare
 on:
   push:
     branches:
-      - main  # Trigger deploy only on push to the main branch
+      - cloudflare-debug  # Trigger deploy only on push to the main branch
 
 jobs:
   deploy:
@@ -14,24 +14,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: List files to check directory structure
+      run: ls -la
+
     # Set working directory to the folder where Cloudflare files are located
     - name: Set working directory for Cloudflare deployment
       run: cd CheckMateCloudFlare  # Update this to the correct folder path if needed
 
     # Install dependencies (ensure package.json exists in CheckMateCloudFlare folder)
     - name: Install dependencies
-      run: |
-        cd CheckMateCloudFlare
-        npm install  # Make sure package.json is in this folder
+      run: npm install  # Make sure package.json is in this folder
 
     # Build the project
     - name: Build project
-      run: |
-        cd CheckMateCloudFlare
-        npm run build  # This command may need to be adjusted based on your build process
+      run: npm run build  # This command may need to be adjusted based on your build process
 
     # Deploy to Cloudflare
     - name: Deploy to Cloudflare
-      run: |
-        cd CheckMateCloudFlare
-        npx wrangler publish  # Make sure you have wrangler set up correctly in the folder
+      run: wrangler deploy  # Make sure you have wrangler set up correctly in the folder

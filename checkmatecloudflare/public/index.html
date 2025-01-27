@@ -2,12 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Checkmate cc/p</title>
-    <script defer="defer" src="/static/js/main.d8263176.js"></script>
-    <link href="/static/css/main.49faa5e3.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADHD Friendly To-Do List</title>
+    <link rel="stylesheet" href="app.css"> <!-- Link to your styles -->
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Sidebar -->
+    <!-- <div class="sidebar">
+      <button class="sidebar-toggle">☰</button>
+      <h2>Sidebar Content</h2>
+      <p>Links, content, etc.</p>
+    </div> -->
+
+    <!-- Sidebar Toggle Button -->
+    <div class="sidebar">
+        <button class="sidebar-toggle">☰</button>
+    </div>
+
+    <!-- Main Content (React app or other content here) -->
+    <div class="main-content">
+        <div id="root"></div> <!-- This is where your React app is injected -->
+    </div>
+    
+    <script src="app.js"></script> <!-- Link to your JavaScript -->
   </body>
 </html>
