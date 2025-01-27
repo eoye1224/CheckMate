@@ -1,0 +1,263 @@
+/* Overall page layout */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Light background color */
+    color: #444; /* Default text color */
+}
+
+body.dark-mode {
+    background-color: #222; /* Darker background for the whole page */
+    color: white; /* White text for dark mode */
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #f5f5f5;
+    color: #444;
+    width: 250px;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    transition: 0.3s ease; /* Smooth transition when toggling visibility */
+}
+
+/* Sidebar hidden state */
+.sidebar.hidden {
+    display: none;
+}
+
+/* Sidebar button to toggle visibility (no hover effects) */
+.sidebar-toggle {
+    font-size: 24px;
+    z-index: 1000; /* Ensure it's above other elements */
+    background-color: transparent;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 190px; /* Position the toggle button at the top right corner of the sidebar */
+    padding: 10px;
+    border-radius: 5px; /* Square rounded corners like Instagram logo */
+}
+
+/* Main content adjustment when sidebar is hidden */
+.main-content {
+    margin-left: 250px; /* Default margin for sidebar */
+    transition: margin-left 0.3s ease; /* Smooth transition when sidebar is toggled */
+}
+
+/* Adjust the main content when sidebar is hidden */
+.sidebar.hidden + .main-content {
+    margin-left: 0; /* Remove left margin when sidebar is hidden */
+}
+
+/* Header styles */
+header {
+    display: flex; /* Enable flexbox layout */
+    justify-content: space-between; /* Space between header content and the switch */
+    align-items: center; /* Vertically align the header content */
+    padding: 20px 30px; /* Adjusted padding for balanced spacing */
+    background-color: var(--header-bg-color);
+    box-shadow: none;
+    margin: 0 20px;
+    position: relative;
+    width: 100%; /* Ensure the header spans the full width of the screen */
+}
+
+header.dark-mode {
+    background-color: #444; /* Darker background for header */
+    color: white; /* White text for header in dark mode */
+}
+
+header h1 {
+    font-size: 28px;
+    color: inherit; /* Inherit the color from parent (header) */
+    margin: 0;
+    flex-grow: 1; /* Makes the heading take up remaining space and centers it */
+    text-align: center; /* Ensures the text is centered */
+}
+
+/* Switch styles inside header */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+    margin: 0 10px; /* Margin between switch and text */
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    border-radius: 50px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+/* When the checkbox is checked, move the slider */
+input:checked + .slider {
+    background-color: #4caf50; /* Green background for the active state */
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px); /* Move the circle to the right */
+}
+
+/* Task list and container */
+.task-list {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 900px;
+    background-color: var(--task-list-bg-color);
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+.task-list.dark-mode {
+    background-color: #333;
+    color: white;
+}
+
+/* Analytics section styles */
+.analytics {
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--analytics-bg-color);
+    border-radius: 8px;
+    box-shadow: none;
+    border: 2px solid #ccc;
+    max-width: 900px;
+}
+
+.analytics.dark-mode {
+    background-color: #222;
+    color: white;
+    border: 2px solid #666;
+}
+
+.analytics h3,
+.analytics p {
+    color: inherit; /* Inherit text color */
+}
+
+/* Progress bar container */
+.progress-bar-container {
+    margin-top: 20px;  /* Increased space for better separation */
+    text-align: center; /* Center the label */
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    padding: 8px; /* Adjusted padding for cleaner layout */
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #4caf50; /* Green color for progress */
+    border-radius: 5px;
+}
+
+.dark-mode .progress-bar {
+    background-color: #4caf50; /* Light green for dark mode */
+}
+
+/* Task input styles */
+.task-input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px; /* Increased top margin */
+    gap: 15px; /* Increased gap between inputs */
+}
+
+.task-input-field {
+    padding: 12px; /* Increased padding for input fields */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.task-input-field.dark-mode {
+    background-color: #222;
+    color: white;
+    border: 1px solid #222;
+}
+
+/* Button Styles */
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    margin-top: 10px;
+}
+
+button.dark-mode {
+    background-color: #222;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button.dark-mode:hover {
+    background-color: #222;
+}
+
+/* Global styles for dark mode */
+.dark-mode {
+    background-color: #222; /* Dark background for the whole page */
+    color: white; /* White text for dark mode */
+}
+
+/* Task item dark mode */
+.task-item.dark-mode {
+    background-color: #222; /* Darker task item background */
+    color: white; /* White text for tasks in dark mode */
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+    padding: 12px;
+    background-color: #222; /* Dark background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.dark-mode-toggle:hover {
+    background-color: #444; /* Darker background on hover */
+    color: white;
+}
+
