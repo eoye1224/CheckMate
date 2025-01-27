@@ -1,7 +1,7 @@
 {
   "name": "checkmate",
   "version": "0.0.0",
-  "homepage": ".",
+  "homepage": "http://.",
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",
     "@cloudflare/workers-types": "^4.20250124.3",
@@ -20,7 +20,9 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
+    "aws-sdk": "^2.1692.0",
     "bootstrap": "^5.3.3",
+    "express": "^4.21.2",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.8",
     "react-confetti": "^6.2.2",
@@ -38,5 +40,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
