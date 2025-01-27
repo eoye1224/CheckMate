@@ -4,3 +4,10 @@ workers_dev = true
 main = "src/index.js"
 compatibility_date = "2025-01-26"
 
+[build]
+  command = "npm run build"
+  cwd = "./"
+  output_dir = "build"  # Set this to the directory containing your built files (e.g., 'build')
+
+[env]
+  NODE_ENV = "production"
