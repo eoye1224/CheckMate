@@ -4,10 +4,14 @@ on:
   push:
     branches:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - cloudflare-debug  # Trigger deploy only on push to the main branch
 =======
       - main  # Trigger deploy only on push to the main branch
 >>>>>>> fe10ca410c6649c6ae5285833f21693d817e33a4
+=======
+      - cloudflare-debug  # Trigger deploy only on push to the main branch
+>>>>>>> features/task-display-and-function
 
 jobs:
   deploy:
@@ -19,6 +23,9 @@ jobs:
       uses: actions/checkout@v2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> features/task-display-and-function
     - name: List files to check directory structure
       run: ls -la
 
@@ -36,6 +43,7 @@ jobs:
 
     # Deploy to Cloudflare
     - name: Deploy to Cloudflare
+<<<<<<< HEAD
       run: wrangler publish  # Make sure you have wrangler set up correctly in the folder
 =======
     # Set working directory to the folder where Cloudflare files are located
@@ -60,3 +68,6 @@ jobs:
         cd cloudflare/CheckMateCloudFlare
         npx wrangler publish  # Make sure you have wrangler set up correctly in the folder
 >>>>>>> fe10ca410c6649c6ae5285833f21693d817e33a4
+=======
+      run: wrangler deploy  # Make sure you have wrangler set up correctly in the folder
+>>>>>>> features/task-display-and-function
