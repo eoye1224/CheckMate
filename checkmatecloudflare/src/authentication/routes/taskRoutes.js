@@ -1,26 +1,31 @@
 const express = require('express');
 const Task = require('../models/Task'); // Your task model
-const authMiddleware = require('../middleware/authmiddleware'); // Your JWT middleware
+const authMiddleware = require('../middleware/authmiddleware'); // Your session middleware
 const router = express.Router();
 
-// Create Task Route (protected)
-router.post('/tasks', authMiddleware, async (req, res) => {
-  const { title, dueDate, priority } = req.body;
+// Create Task (POST /tasks)
+router.post("/", authMiddleware, async (req, res) => {
+    try {
+        const { title, dueDate, label, priority } = req.body;
 
-  try {
-    // Use req.userId to associate the task with the logged-in user
-    const newTask = new Task({
-      title,
-      dueDate,
-      priority,
-      userId: req.userId, // This is the ID of the authenticated user
-    });
+        if (!title) {
+            return res.status(400).json({ message: "Title is required" });
+        }
 
-    await newTask.save();
-    res.status(201).json({ message: 'Task created' });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
-  }
+        const task = new Task({
+            user: req.user.id,  // Use the user ID from the session
+            title,
+            dueDate,
+            label,
+            priority,
+        });
+
+        await task.save();
+        res.status(201).json({ message: "Task created successfully", task });
+    } catch (error) {
+        console.error("Error creating task:", error);  // Log the error for debugging
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
 });
 
 module.exports = router;

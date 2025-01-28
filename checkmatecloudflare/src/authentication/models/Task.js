@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  dueDate: { type: Date, required: true },
-  priority: { type: String, required: true },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Link task to a user
-});
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    title: { type: String, required: true },
+    dueDate: { type: Date, required: true },
+    label: { type: String, required: true },
+    priority: { type: String, required: true },
+}, { timestamps: true });
 
 module.exports = mongoose.model('Task', taskSchema);

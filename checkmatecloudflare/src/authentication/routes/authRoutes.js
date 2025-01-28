@@ -1,11 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-require('dotenv').config();  // Ensure dotenv is configured
+require('dotenv').config();
 
 const router = express.Router();
-const jwtSecret = process.env.JWT_SECRET || 'fallback_secret';
 
 // Registration route
 router.post('/register', async (req, res) => {
@@ -30,49 +28,40 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login route
+// Login route (Using sessions)
 router.post('/login', async (req, res) => {
-  console.log('Login route hit');  // Add a log to test if the route is being hit
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
-    if (!user) {
-      console.log('User not found:', email);  // Log user not found
-      return res.status(400).json({ message: 'User not found' });
-    }
+    if (!user) return res.status(400).json({ message: 'User not found' });
 
-    // Compare the hashed password using comparePassword method
-    const isMatch = await user.comparePassword(password);
-    console.log('Plain password:', password);  // Log plain password
-    console.log('Stored password hash:', user.password);  // Log stored hash
-    console.log('Password match result:', isMatch);  // Log comparison result
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-    if (isMatch) {
-      // Generate JWT token
-      const token = jwt.sign(
-        { userId: user._id, username: user.username },
-        jwtSecret, 
-        { expiresIn: '1h' }
-      );
+    // Set session
+    req.session.userId = user._id;
+    req.session.username = user.username;
 
-      // Send JWT token in HTTP-only cookie or header
-      // res.cookie('token', token, {
-      //   httpOnly: true,
-      //   secure: process.env.NODE_ENV === 'production', 
-      //   maxAge: 3600000,
-      // });
-
-      res.status(200).json({ message: 'Login successful', token });
-    } else {
-      console.log('Invalid password attempt');
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
+    res.status(200).json({
+      message: 'Login successful',
+      userId: user._id,
+      username: user.username,
+    });
   } catch (err) {
-    console.error('Server error:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
+// Logout route
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error during logout' });
+    }
+    res.status(200).json({ message: 'Logged out successfully' });
+  });
+});
 
 module.exports = router;
