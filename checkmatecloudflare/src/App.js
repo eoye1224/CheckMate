@@ -68,11 +68,7 @@ const App = () => {
       priority: priority || "medium",
     };
 
-    setTasks((prevTasks) => {
-      const updatedTasks = [...prevTasks, newTask];
-      console.log("Tasks after addition:", updatedTasks);
-      return updatedTasks;
-    });
+    setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
   const handleToggleTask = (task) => {
@@ -104,10 +100,11 @@ const App = () => {
   return (
     <div className={`app-container ${theme === "dark" ? "dark-mode" : ""}`}>
       <div className={`sidebar ${!isSidebarVisible ? "hidden" : ""}`}>
-        <button className="sidebar-toggle" onClick={toggleSidebar}>☰</button>
         <Sidebar onSelectTab={setSelectedTab} theme={theme} />
       </div>
-
+      <button className="sidebar-toggle" onClick={toggleSidebar} aria-expanded={isSidebarVisible}>
+        ☰
+      </button>
       <div className="main-content">
         <Header onToggleDarkMode={toggleDarkMode} theme={theme} />
         <div className="task-container">
@@ -158,25 +155,5 @@ const App = () => {
     </div>
   );
 };
-
-document.addEventListener('DOMContentLoaded', () => {
-  const toggleButton = document.querySelector('.sidebar-toggle');
-  const sidebar = document.querySelector('.sidebar');
-  const mainContent = document.querySelector('.main-content');  // Adjust the class if necessary
-
-  // Log the elements to ensure they are not null
-  console.log(toggleButton, sidebar, mainContent);
-
-  // Make sure the elements exist before adding the event listener
-  if (toggleButton && sidebar && mainContent) {
-      toggleButton.addEventListener('click', () => {
-          sidebar.classList.toggle('hidden');  // Hide or show the sidebar
-          mainContent.classList.toggle('sidebar-hidden');  // Adjust the main content layout
-      });
-  } else {
-      console.error("Sidebar or main content elements not found.");
-  }
-});
-
 
 export default App;

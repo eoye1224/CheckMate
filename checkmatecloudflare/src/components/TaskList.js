@@ -1,6 +1,6 @@
 import React from "react";
 import TaskItem from "./TaskItem";
-import '../styles/TaskItem.css';
+import "../styles/TaskItem.css";
 
 const TaskList = ({ tasks, onToggleTask, onSetPriority, theme }) => {
   if (!tasks || tasks.length === 0) {
@@ -15,7 +15,7 @@ const TaskList = ({ tasks, onToggleTask, onSetPriority, theme }) => {
           task={task} 
           onToggleTask={onToggleTask} 
           onSetPriority={onSetPriority} 
-          theme={theme} // Ensure the theme is passed down to TaskItem
+          theme={theme}
         />
       ))}
     </ul>

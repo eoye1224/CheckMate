@@ -8,80 +8,116 @@ body {
 }
 
 body.dark-mode {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
     background-color: #222; /* Darker background for the whole page */
     color: white; /* White text for dark mode */
 }
 
-/* Sidebar Styles */
-.sidebar {
-    background-color: #f5f5f5;
-    color: #444;
-    width: 250px;
-    height: 100vh;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    transition: 0.3s ease; /* Smooth transition when toggling visibility */
-}
-
-/* Sidebar hidden state */
-.sidebar.hidden {
-    display: none;
-}
-
-/* Sidebar button to toggle visibility (no hover effects) */
-.sidebar-toggle {
-    font-size: 24px;
-    z-index: 1000; /* Ensure it's above other elements */
-    background-color: transparent;
-    color: #333;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    left: 190px; /* Position the toggle button at the top right corner of the sidebar */
-    padding: 10px;
-    border-radius: 5px; /* Square rounded corners like Instagram logo */
-}
-
-/* Main content adjustment when sidebar is hidden */
-.main-content {
-    margin-left: 250px; /* Default margin for sidebar */
-    transition: margin-left 0.3s ease; /* Smooth transition when sidebar is toggled */
-}
-
-/* Adjust the main content when sidebar is hidden */
-.sidebar.hidden + .main-content {
-    margin-left: 0; /* Remove left margin when sidebar is hidden */
-}
-
 /* Header styles */
 header {
-    display: flex; /* Enable flexbox layout */
-    justify-content: space-between; /* Space between header content and the switch */
-    align-items: center; /* Vertically align the header content */
-    padding: 20px 30px; /* Adjusted padding for balanced spacing */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
     background-color: var(--header-bg-color);
     box-shadow: none;
     margin: 0 20px;
     position: relative;
-    width: 100%; /* Ensure the header spans the full width of the screen */
+    width: 100%;
 }
 
 header.dark-mode {
-    background-color: #444; /* Darker background for header */
-    color: white; /* White text for header in dark mode */
+    background-color: #444;
+    color: white;
 }
 
 header h1 {
     font-size: 28px;
-    color: inherit; /* Inherit the color from parent (header) */
+    color: inherit;
     margin: 0;
-    flex-grow: 1; /* Makes the heading take up remaining space and centers it */
-    text-align: center; /* Ensures the text is centered */
+    flex-grow: 1;
+    text-align: center;
 }
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #f5f5f5;
+    color: #444;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out; /* Smooth transition when toggling visibility */
+}
+
+/* Sidebar hidden state */
+.sidebar.hidden {
+    transform: translateX(-100%); /* Slide the sidebar out of view */
+}
+
+/* Sidebar button to toggle visibility */
+.sidebar-toggle {
+    font-size: 24px;
+    z-index: 1001; /* Ensure it's above other elements */
+    background-color: transparent;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    position: fixed; /* Fix the button to the screen */
+    top: 10px;
+    left: 190px; /* Place button at the top left of the screen */
+    padding: 10px;
+    border-radius: 5px;
+    transition: left 0.3s ease-in-out;
+}
+
+/* When sidebar is hidden, adjust the button position */
+.sidebar.hidden + .sidebar-toggle {
+    left: 10px; /* Adjust button position when sidebar is hidden */
+}
+
+/* Adjust the main content when sidebar is hidden */
+.sidebar.hidden + .main-content {
+    margin-left: 0px; /* Remove left margin when sidebar is hidden */
+}
+
+/* Sidebar items */
+.sidebar-item {
+    padding: 15px;
+    text-align: left;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-bottom: 1px solid white;
+}
+
+.sidebar-item:hover .dark-mode {
+    background-color: #ccc;
+}
+
+.sidebar-item:hover {
+    background-color: #ccc;
+}
+
+/* Dark mode for sidebar */
+.sidebar.dark-mode {
+    background-color: #333;
+    color: white;
+}
+
+.sidebar-item.dark-mode {
+    background-color: #444;
+}
+
+/* Main content adjustment when sidebar is hidden */
+/* .main-content { */
+    /* margin-left: 250px; Default margin for sidebar */
+    /* transition: margin-left 0.3s ease-in-out; Smooth transition when sidebar is toggled */
+/* } */
 
 /* Switch styles inside header */
 .switch {
@@ -89,7 +125,7 @@ header h1 {
     display: inline-block;
     width: 34px;
     height: 20px;
-    margin: 0 10px; /* Margin between switch and text */
+    margin: 0 10px;
 }
 
 .switch input {
@@ -124,11 +160,11 @@ header h1 {
 
 /* When the checkbox is checked, move the slider */
 input:checked + .slider {
-    background-color: #4caf50; /* Green background for the active state */
+    background-color: #505350;
 }
 
 input:checked + .slider:before {
-    transform: translateX(14px); /* Move the circle to the right */
+    transform: translateX(14px);
 }
 
 /* Task list and container */
@@ -136,7 +172,7 @@ input:checked + .slider:before {
     margin: 40px auto;
     padding: 20px;
     max-width: 900px;
-    background-color: var(--task-list-bg-color);
+    background-color: #fcfcfc;
     border-radius: 10px;
     box-shadow: none;
 }
@@ -165,39 +201,43 @@ input:checked + .slider:before {
 
 .analytics h3,
 .analytics p {
-    color: inherit; /* Inherit text color */
+    color: inherit;
 }
 
 /* Progress bar container */
 .progress-bar-container {
-    margin-top: 20px;  /* Increased space for better separation */
-    text-align: center; /* Center the label */
+    margin-top: 20px;
+    text-align: center;
     width: 100%;
     background-color: #f3f3f3;
     border-radius: 5px;
-    padding: 8px; /* Adjusted padding for cleaner layout */
+    padding: 8px;
+}
+
+.dark-mode .progress-bar-container {
+    background-color: #666;
 }
 
 .progress-bar {
     height: 20px;
-    background-color: #4caf50; /* Green color for progress */
+    background-color: #4caf50;
     border-radius: 5px;
 }
 
 .dark-mode .progress-bar {
-    background-color: #4caf50; /* Light green for dark mode */
+    background-color: #ccc;
 }
 
 /* Task input styles */
 .task-input {
     display: flex;
     flex-direction: column;
-    margin-top: 30px; /* Increased top margin */
-    gap: 15px; /* Increased gap between inputs */
+    margin-top: 30px;
+    gap: 15px;
 }
 
 .task-input-field {
-    padding: 12px; /* Increased padding for input fields */
+    padding: 12px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -205,51 +245,53 @@ input:checked + .slider:before {
 
 .task-input-field.dark-mode {
     background-color: #222;
-    color: white;
-    border: 1px solid #222;
+    color: #ccc;
+    border: 1px solid #ccc;
 }
 
 /* Button Styles */
 button {
     padding: 12px 25px;
     font-size: 16px;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #4caf50;
+    background-color: #ccc;
     color: white;
     margin-top: 10px;
 }
 
 button.dark-mode {
     background-color: #222;
+    border:1px solid #ccc;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #999;
 }
 
 button.dark-mode:hover {
-    background-color: #222;
+    background-color: #333;
 }
 
 /* Global styles for dark mode */
 .dark-mode {
-    background-color: #222; /* Dark background for the whole page */
-    color: white; /* White text for dark mode */
+    background-color: #222;
+    color: white;
 }
 
 /* Task item dark mode */
-.task-item.dark-mode {
-    background-color: #222; /* Darker task item background */
-    color: white; /* White text for tasks in dark mode */
-}
+/* .task-item.dark-mode {
+    background-color: #222;
+    border:1px solid #202020;
+} */
 
 /* Dark mode toggle button */
 .dark-mode-toggle {
     padding: 12px;
-    background-color: #222; /* Dark background */
-    color: white; /* White text */
+    background-color: #222;
+    color: #ccc;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -257,7 +299,29 @@ button.dark-mode:hover {
 }
 
 .dark-mode-toggle:hover {
-    background-color: #444; /* Darker background on hover */
-    color: white;
+    background-color: #444;
+    color: #ccc;
 }
 
+
+
+/* Main content area */
+.app-container {
+    display: flex;
+}
+
+.main-content {
+    margin-left: 250px; /* Default margin for sidebar */
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Adjust layout when sidebar is hidden */
+.sidebar.hidden + .main-content {
+    margin-left: 0; /* Remove left margin when sidebar is hidden */
+}
+
+/* Dark mode for main content */
+.main-content.dark-mode {
+    background-color: #2c2f36; /* Lighter gray for main content */
+    color: white;
+}
