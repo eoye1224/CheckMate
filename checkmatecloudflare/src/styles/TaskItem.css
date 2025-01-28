@@ -1,99 +1,77 @@
+/* Add styles for the priority circle/button */
+.priority-wrapper {
+  position: absolute; /* Position relative to the parent task item */
+  top: 5px;
+  right: 5px;
+  padding: 5px;
+}
+
+.priority-indicator {
+  width: 15px;  /* Smaller size */
+  height: 15px; /* Smaller size */
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #fff;
+}
+
+/* Dark mode for priority indicator */
+.task-item.dark-mode .priority-indicator {
+  border: 2px solid #222;
+}
+
+/* Priority Dropdown */
+.priority-dropdown {
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  width: 80px;
+  padding: 3px;
+  border-radius: 5px;
+  font-size: 12px; /* Make text smaller */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+/* Dark mode for priority dropdown */
+.task-item.dark-mode .priority-dropdown {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
 /* Task Item Styles */
 .task-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #fff;
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .task-item.dark-mode {
-    background-color: #444;
-    color: white;
-  }
-  
-  .task-item.completed {
-    background-color: #d4edda;
-    text-decoration: line-through;
-  }
-  
-  .task-title {
-    flex-grow: 1;
-    font-size: 1.1rem;
-  }
-  
-  /* Priority Level Styles */
-  .priority-level {
-    background-color: #ffcc00;
-    border-radius: 3px;
-    padding: 3px 6px;
-  }
-  
-  .priority-level.high {
-    background-color: #ff4d4d;
-  }
-  
-  .priority-level.medium {
-    background-color: #ffcc00;
-  }
-  
-  .priority-level.low {
-    background-color: #4dff4d;
-  }
+  display: flex;
+  flex-direction: row; /* Ensure items are aligned in a row */
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 15px;
+  margin: 15px 0; /* Increased margin between task items */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
 
-  .task-item.low {
-    background-color: #98FB98; /* Pastel green */
-    color: #333;
-  }
-  
-  .task-item.low.dark-mode {
-    background-color: #2d4f2b; /* Darker green for dark mode */
-  }
-  
-  .task-item.medium {
-    background-color: #FFFFE0; /* Pastel yellow */
-    color: #333;
-  }
-  
-  .task-item.medium.dark-mode {
-    background-color: #6e6e4f; /* Darker yellow for dark mode */
-  }
-  
-  .task-item.high {
-    background-color: #FFB6C1; /* Pastel red */
-    color: #333;
-  }
-  
-  .task-item.high.dark-mode {
-    background-color: #9e2a2f; /* Darker red for dark mode */
-  }
-  
-  /* Animations for Task Completion */
-  @keyframes taskCompleted {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(0.9);
-      opacity: 0.5;
-    }
-  }
-  
-  .task-item.completed {
-    animation: taskCompleted 0.3s ease-out;
-    text-decoration: line-through;
-    background-color: #d4edda;
-  }
-  
-  /* Task Due Date Styles */
-  .due-date {
-    color: #007bff;
-    font-size: 0.9rem;
-    font-weight: bold;
-  }
-  
+.task-item.dark-mode {
+  background-color: #222;
+  color: white;
+  border: 1px solid #444;
+}
+
+/* Completed Task */
+.task-item.completed {
+  background-color: #888;
+  text-decoration: line-through;
+  opacity: 0.7; /* Optional: makes completed tasks slightly faded */
+}
+
+/* Task Item Hover Effect */
+.task-item:hover {
+  background-color: #f4f4f4; /* Light background change */
+  cursor: pointer; /* Pointer cursor to indicate interactivity */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+}
