@@ -19,7 +19,12 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
+    "express-session": "^1.18.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.8",
     "react-confetti": "^6.2.2",
