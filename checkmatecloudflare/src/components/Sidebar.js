@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/App.css";
 
-const Sidebar = ({ onSelectTab, theme }) => {
+const Sidebar = ({ onSelectTab, theme, onNewTaskClick }) => {
   return (
     <div className={`sidebar ${theme === "dark" ? "dark-mode" : ""}`}>
       <div className="sidebar-item" onClick={() => onSelectTab("today")}>
@@ -12,6 +12,9 @@ const Sidebar = ({ onSelectTab, theme }) => {
       </div>
       <div className="sidebar-item" onClick={() => onSelectTab("filtered")}>
         Filtered/Labeled Tasks
+      </div>
+      <div className="sidebar-item new-task" onClick={onNewTaskClick}>
+        New Task
       </div>
     </div>
   );

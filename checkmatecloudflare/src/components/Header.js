@@ -1,7 +1,7 @@
 import React from "react";
 import ThemeSelector from "./ThemeSelector";
 
-const Header = ({ onToggleDarkMode, theme }) => {
+const Header = ({ onToggleDarkMode, theme, onNewTask }) => {
     return (
       <header>
         <h1>CheckMate: An ADHD-Friendly To-Do List</h1>
@@ -26,6 +26,6 @@ const Header = ({ onToggleDarkMode, theme }) => {
         </div>
       </header>
     );
-  };
-  
-  export default Header;
+};
+
+export default Header;
