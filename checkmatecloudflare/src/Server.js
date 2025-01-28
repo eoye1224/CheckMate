@@ -3,11 +3,18 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const User = require('./authentication/models/User.js');
+const authRoutes = require('./authentication/routes/authRoutes');
+const taskRoutes = require('./authentication/routes/taskRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
+require('dotenv').config();
 
 // Middleware
 app.use(express.json());
+
+// Routes
+app.use(authRoutes); // User authentication routes
+app.use(taskRoutes); // Task-related routes
 
 // Session setup
 app.use(

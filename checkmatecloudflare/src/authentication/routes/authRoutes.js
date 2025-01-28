@@ -5,7 +5,7 @@ const User = require('../models/User');
 require('dotenv').config();  // Ensure dotenv is configured
 
 const router = express.Router();
-
+const jwtSecret = process.env.JWT_SECRET || 'fallback_secret';
 
 // Registration route
 router.post('/register', async (req, res) => {
@@ -52,16 +52,16 @@ router.post('/login', async (req, res) => {
       // Generate JWT token
       const token = jwt.sign(
         { userId: user._id, username: user.username },
-        process.env.JWT_SECRET, 
+        jwtSecret, 
         { expiresIn: '1h' }
       );
 
       // Send JWT token in HTTP-only cookie or header
-      res.cookie('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', 
-        maxAge: 3600000, // 1 hour
-      });
+      // res.cookie('token', token, {
+      //   httpOnly: true,
+      //   secure: process.env.NODE_ENV === 'production', 
+      //   maxAge: 3600000,
+      // });
 
       res.status(200).json({ message: 'Login successful', token });
     } else {
