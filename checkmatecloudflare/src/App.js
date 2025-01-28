@@ -1,101 +1,90 @@
 import React, { useState } from "react";
-import Header from "./components/Header";
-import TaskList from "./components/TaskList";
-import Analytics from "./components/Analytics";
-import Sidebar from "./components/Sidebar";
+import axios from "axios";
+import Header from "./components/Header.js";
+import TaskList from "./components/TaskList.js";
+import Analytics from "./components/Analytics.js";
+import Sidebar from "./components/Sidebar.js";
 import { toggleTaskCompletion, setTaskPriority } from "./utils";
 import "./styles/App.css";
 import "./styles/TaskItem.css";
 
 const App = () => {
   const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Welcome to CheckMate! 🎉 Start by completing this task to begin your productivity journey.",
-      completed: false,
-      priority: "medium",
-      dueDate: "",
-    },
-    {
-      id: 2,
-      title: "Start small: Add just 1 task that's been on your mind 💆",
-      completed: false,
-      priority: "low",
-      dueDate: "",
-    },
-    {
-      id: 3,
-      title: "Do a weekly review of my tasks and goals 🔄",
-      completed: false,
-      priority: "high",
-      dueDate: "",
-    },
-    {
-      id: 4,
-      title: "Download CheckMate on your phone for easy access 📱",
-      completed: false,
-      priority: "low",
-      dueDate: "",
-    },
+    // {
+    //   id: 1,
+    //   title: "Welcome to CheckMate! 🎉 Start by completing this task to begin your productivity journey.",
+    //   completed: false,
+    //   priority: "medium",
+    //   dueDate: "",
+    // },
+    // {
+    //   id: 2,
+    //   title: "Start small: Add just 1 task that's been on your mind 💆",
+    //   completed: false,
+    //   priority: "low",
+    //   dueDate: "",
+    // },
+    // {
+    //   id: 3,
+    //   title: "Do a weekly review of my tasks and goals 🔄",
+    //   completed: false,
+    //   priority: "high",
+    //   dueDate: "",
+    // },
+    // {
+    //   id: 4,
+    //   title: "Download CheckMate on your phone for easy access 📱",
+    //   completed: false,
+    //   priority: "low",
+    //   dueDate: "",
+    // },
   ]);
 
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [theme, setTheme] = useState("light");
-  const [selectedTab, setSelectedTab] = useState("all");
   const [taskInput, setTaskInput] = useState("");
   const [taskPriority, setTaskPriority] = useState("medium");
+  const [taskDueDate, setTaskDueDate] = useState("");
+  const [theme, setTheme] = useState("light");
   const [isSidebarVisible, setSidebarVisible] = useState(true);
-
-  const toggleDarkMode = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
+  const [selectedTab, setSelectedTab] = useState("tasks");
 
   const toggleSidebar = () => {
-    setSidebarVisible((prevState) => !prevState);
+    setSidebarVisible(!isSidebarVisible);
   };
 
-  const toggleTaskCompletion = (task) => {
-    return { ...task, completed: !task.completed };
+  const toggleDarkMode = () => {
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
-  const addTask = (title, priority) => {
-    if (!title.trim()) return;
+  const addTask = async () => {
+    if (!taskInput.trim()) return;
+    const task = { title: taskInput, dueDate: taskDueDate, label: "general", priority: taskPriority };
 
-    const newTask = {
-      id: Date.now(),
-      title,
-      completed: false,
-      priority: priority || "medium",
-    };
-
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-  };
-
-  const handleToggleTask = (task) => {
-    setTasks(tasks.map((t) => (t.id === task.id ? toggleTaskCompletion(t) : t)));
-  };
-
-  const handleSetPriority = (task, priority) => {
-    setTasks(tasks.map((t) => 
-      t.id === task.id ? { ...t, priority: priority } : t
-    ));
-  };
-
-  const getTabFilteredTasks = () => {
-    switch (selectedTab) {
-      case "today":
-        return tasks.filter((task) => task.dueDate === "today");
-      case "upcoming":
-        return tasks.filter((task) => task.dueDate && task.dueDate > "today");
-      default:
-        return tasks;
+    try {
+      const response = await axios.post("http://localhost:5000/tasks", task, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+       // Log before updating state
+      console.log('Before update:', tasks);
+      setTasks((prevTasks) => {
+        const updatedTasks = [...prevTasks, response.data.task];
+        console.log('After update:', updatedTasks);
+        return updatedTasks;
+      });
+      setTaskInput("");
+      setTaskPriority("medium");
+      setTaskDueDate("");
+    } catch (error) {
+      console.error("Error adding task:", error);
     }
   };
 
   const getCompletionProgress = () => {
     const completedTasks = tasks.filter((task) => task.completed).length;
-    return Math.round((completedTasks / tasks.length) * 100);
-  };
+    return (completedTasks / tasks.length) * 100;
+  }; 
 
   return (
     <div className={`app-container ${theme === "dark" ? "dark-mode" : ""}`}>
@@ -109,10 +98,7 @@ const App = () => {
         <Header onToggleDarkMode={toggleDarkMode} theme={theme} />
         <div className="task-container">
           <TaskList
-            tasks={getTabFilteredTasks()}
-            filterStatus={filterStatus}
-            onToggleTask={handleToggleTask}
-            onSetPriority={handleSetPriority}
+            tasks={tasks}
             theme={theme}
           />
           <div className="task-input">
@@ -132,13 +118,14 @@ const App = () => {
               <option value="medium">Medium</option>
               <option value="low">Low</option>
             </select>
+            <input
+              type="date"
+              value={taskDueDate}
+              onChange={(e) => setTaskDueDate(e.target.value)}
+              className={`due-date-field ${theme === "dark" ? "dark-mode" : ""}`}
+            />
             <button
-              onClick={() => {
-                if (taskInput.trim()) {
-                  addTask(taskInput, taskPriority);
-                  setTaskInput("");
-                }
-              }}
+              onClick={addTask}
               className={`add-task-btn ${theme === "dark" ? "dark-mode" : ""}`}
             >
               Add Task
