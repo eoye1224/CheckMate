@@ -7,10 +7,15 @@ const taskRoutes = require('./authentication/routes/taskRoutes.js');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-app.use(express.json());
-
 // CORS configuration if needed
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',  // Replace this with the actual frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed HTTP methods
+    credentials: true,}
+));
+
+app.use(express.json());
 
 // Session setup
 app.use(
