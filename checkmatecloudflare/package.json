@@ -32,7 +32,9 @@
     "react-bootstrap": "^2.10.8",
     "react-confetti": "^6.2.2",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^5.1.0"
+    "react-router-dom": "^5.1.0",
+    "webpack": "^5.97.1",
+    "webpack-dev-server": "^5.2.0"
   },
   "browserslist": {
     "production": [
