@@ -85,6 +85,4 @@ From a technical perspective, setting up user authentication was tricky at first
 
 Despite these setbacks, I am incredibly proud of how far I've come. I’ve never implemented user authentication before, and before scrapping my previous design, I had a fully functional website. I am determined to continue working on Checkmate, and I am excited to see how much more I can grow as I refine the project into its final form.
 
----
 
-Let me know if you need any further edits!
