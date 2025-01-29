@@ -10,7 +10,18 @@ Checkmate is an ADHD-friendly to-do list application designed to help users stay
 
 ## Screenshots/GIFs/Demo Video
 
-[Include any visuals showcasing your app. You could add a few screenshots or link to a demo video if you have one.]
+Desgin before starting over:
+https://github.com/user-attachments/assets/1b508dc7-d268-4e08-9dde-4cdd134d6021
+
+After starting over:
+
+https://github.com/user-attachments/assets/304314c4-cbe2-49ea-b072-50a656e0d866
+
+https://github.com/user-attachments/assets/d97ea7db-01e3-43b9-9452-b7c70090ff8c
+
+https://github.com/user-attachments/assets/237301ad-7661-4823-a2af-4d38be01e5de
+
+https://github.com/user-attachments/assets/b6343cd2-2d1a-40ed-8230-52480fc6ffa7
 
 ## Setup Instructions
 
