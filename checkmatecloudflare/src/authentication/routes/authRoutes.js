@@ -9,6 +9,8 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
   const { email, username, password } = req.body;
 
+  console.log("Registration data:", req.body); // Check the data coming from the frontend
+
   try {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -22,8 +24,10 @@ router.post('/register', async (req, res) => {
     });
 
     await newUser.save();
+    console.log("User saved successfully"); // Debug message
     res.status(201).json({ message: 'User created successfully' });
   } catch (err) {
+    console.error("Error during registration:", err.message); // Detailed error logging
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
@@ -44,6 +48,7 @@ router.post('/login', async (req, res) => {
     req.session.userId = user._id;
     req.session.username = user.username;
 
+    console.log(req.session); // Add this to check the session
     res.status(200).json({
       message: 'Login successful',
       userId: user._id,
@@ -56,6 +61,7 @@ router.post('/login', async (req, res) => {
 
 // Logout route
 router.post('/logout', (req, res) => {
+  console.log('Session destroyed');
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ message: 'Error during logout' });

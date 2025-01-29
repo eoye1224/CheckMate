@@ -136,7 +136,24 @@ header h1 {
   .sidebar-item.new-task.dark-mode:hover {
     background-color: #2e7d32; /* Darker green on hover for dark mode */
   }
-  
+
+  .sidebar-content {
+    flex-grow: 1; /* Ensures content takes up all available space */
+  }
+
+  .sidebar-user {
+    margin-top: auto;
+    padding: 10px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+.sidebar.dark-mode .sidebar-user {
+    color: white;
+    border-top: 1px solid #555;
+}
 
 /* Main content adjustment when sidebar is hidden */
 /* .main-content { */

@@ -56,6 +56,8 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [showLoginPopup, setShowLoginPopup] = useState(true);
   const [showRegisterPopup, setShowRegisterPopup] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false); // Control register screen
+
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
@@ -66,19 +68,24 @@ const App = () => {
   };
 
   const addTask = async () => {
+    if (!isLoggedIn) {
+      console.error("User is not logged in.");
+      return; // Exit the function if the user is not logged in
+    }
+
     if (!taskInput.trim()) return;
 
     const task = {
       title: taskInput,
-      description: taskDescription,
+      description: taskDescription || 'Not provided',
       dueDate: taskDueDate,
       reminderTime: reminderTime,
-      label: taskLabel,
-      priority: taskPriority,
-      completed: false,
+      label: taskLabel || 'general',
+      priority: taskPriority || 'medium',
+      completed: false
     };
 
-    axios.post("http://localhost:5001/tasks", task)
+    axios.post("http://localhost:5001/tasks", task, { withCredentials: true })
       .then(response => {
         console.log('Task added successfully:', response.data);
       })
@@ -103,28 +110,49 @@ const App = () => {
 
   const handleLoginSuccess = (userData) => {
     setIsLoggedIn(true);
-    setUser(userData);
+    setUser(userData.username); // Only set the username to the state
     setShowLoginPopup(false);
   };
+  
 
   const login = async (email, password) => {
-    try {
-      const response = await axios.post("http://localhost:5001/auth/login", { email, password }, { withCredentials: true });
-      handleLoginSuccess(response.data);
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
-  };
+  try {
+    const response = await axios.post("http://localhost:5001/auth/login", { email, password }, { withCredentials: true });
+    console.log("Login response data:", response.data);
+    
+    // Ensure you're passing only the necessary data to the handler
+    handleLoginSuccess({
+      username: response.data.username,
+      userId: response.data.userId,  // You can use userId as needed
+    });
+  } catch (error) {
+    console.error("Login failed:", error);
+  }
+};
 
-  const register = async (email, password, username) => {
+
+  const handleRegister = async (email, password, username) => {
     try {
-      const response = await axios.post("http://localhost:5001/auth/register", { email, password, username }, { withCredentials: true });
-      console.log('Registration successful:', response.data);
-      handleLoginSuccess(response.data);
+        // Ensure correct registration data is logged
+        console.log("Registration data:", { email, password, username });
+        
+        // Send the correct object structure
+        const response = await axios.post("http://localhost:5001/auth/register", 
+            { email, password, username }, 
+            { withCredentials: true }
+        );
+        
+        if (response.status === 201) {
+            console.log('Registration successful:', response.data);
+            setUser(username);  // Update the username state
+            setIsLoggedIn(true);  // Mark the user as logged in
+            setShowRegisterPopup(false);  // Close the registration popup
+            setShowLoginPopup(false);  // Close the login popup
+        }
     } catch (error) {
-      console.error("Registration failed:", error);
+        console.error("Registration failed:", error);
     }
-  };
+};
 
   const getCompletionProgress = () => {
     const totalTasks = tasks.length;
@@ -134,6 +162,7 @@ const App = () => {
 
   return (
     <div className={`app-container ${theme === "dark" ? "dark-mode" : ""}`}>
+      {/* Login Popup */}
       {showLoginPopup && (
         <div className="login-popup">
           <div className="login-popup-content">
@@ -157,53 +186,61 @@ const App = () => {
               </button>
             </p>
           </div>
-      </div>
-    )}
-            {showRegisterPopup && (
-      <div className="login-popup">
-        <div className="login-popup-content">
-          <h2>Register</h2>
-          <input type="text" placeholder="Username" id="username" />
-          <input type="email" placeholder="Email" id="register-email" />
-          <input type="password" placeholder="Password" id="register-password" />
-          <button
-            onClick={() =>
-              register(
-                document.getElementById("register-email").value,
-                document.getElementById("register-password").value,
-                document.getElementById("username").value
-              )
-            }
-          >
-            Register
-          </button>
-          <p>
-            Already have an account?{" "}
-            <button
-              onClick={() => {
-                setShowRegisterPopup(false);
-                setShowLoginPopup(true);
-              }}
-            >
-              Back to Login
-            </button>
-          </p>
         </div>
-      </div>
-    )}
-      <div className={`sidebar ${!isSidebarVisible ? "hidden" : ""}`}>
-        <Sidebar onSelectTab={setSelectedTab} theme={theme} onNewTaskClick={onNewTask} />
-        <button onClick={onNewTask} className="new-task-btn">
-          New Task
-        </button>
-      </div>
+      )}
+      
+      {/* Register Popup */}
+      {showRegisterPopup && (
+        <div className="login-popup">
+          <div className="login-popup-content">
+            <h2>Register</h2>
+            <input type="text" placeholder="Username" id="username" />
+            <input type="email" placeholder="Email" id="register-email" />
+            <input type="password" placeholder="Password" id="register-password" />
+            <button onClick={() => {
+              const username = document.getElementById("username").value;
+              const email = document.getElementById("register-email").value;
+              const password = document.getElementById("register-password").value;
+              handleRegister( email, password, username );
+              }}>
+              Register
+            </button>
+            <p>
+              Already have an account?{" "}
+              <button
+                onClick={() => {
+                  setShowRegisterPopup(false);
+                  setShowLoginPopup(true);
+                }}
+              >
+                Back to Login
+              </button>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Main App Content */}
+      {!showLoginPopup && !showRegisterPopup && isLoggedIn && (
+        <div className={`sidebar ${!isSidebarVisible ? "hidden" : ""}`}>
+          <Sidebar onSelectTab={setSelectedTab} theme={theme} onNewTaskClick={onNewTask} username={user} />
+          <p className="sidebar-username">{user}</p>  {/* Show the username here */}
+          <button onClick={onNewTask} className="new-task-btn">
+            New Task
+          </button>
+        </div>
+      )}
+
       <button className="sidebar-toggle" onClick={toggleSidebar} aria-expanded={isSidebarVisible}>
         ☰
       </button>
+      
       <div className="main-content">
         <Header onToggleDarkMode={toggleDarkMode} theme={theme} />
+        
         <div className="task-container">
           <TaskList tasks={tasks} theme={theme} />
+          
           {taskInputVisible && (
             <div className={`task-input-form ${taskInputVisible ? "visible" : ""} ${theme === "dark" ? "dark-mode" : ""}`}>
               <button onClick={clearTaskForm} className="cancel-button">×</button>
@@ -260,16 +297,17 @@ const App = () => {
               <button onClick={addTask}>Add Task</button>
             </div>
           )}
-
+  
           <div className="progress-container">
             <div className="progress-bar" style={{ width: `${getCompletionProgress()}%` }} />
             <p>{getCompletionProgress()}% Completed</p>
           </div>
         </div>
+        
         <Analytics tasks={tasks} theme={theme} />
       </div>
     </div>
-  );
+  );  
 };
 
 export default App;
