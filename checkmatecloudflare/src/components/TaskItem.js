@@ -4,9 +4,10 @@ import "../styles/TaskItem.css";
 const TaskItem = ({ task, onToggleTask, onSetPriority, theme }) => {
   const [showPriority, setShowPriority] = useState(false);
 
-  if (!task) return null; // Ensure task exists before rendering
+  // Ensure task exists before rendering
+  if (!task) return null; 
 
-  // Function to get the appropriate priority color
+  //Function to get the appropriate priority color based on task priority level.
   const getPriorityColor = () => {
     switch (task.priority) {
       case "high":
@@ -22,19 +23,23 @@ const TaskItem = ({ task, onToggleTask, onSetPriority, theme }) => {
 
   return (
     <li className={`task-item ${task.completed ? "completed" : ""} ${theme === "dark" ? "dark-mode" : ""}`}>
+      {/* Checkbox to toggle task completion */}
       <input
         type="checkbox"
         checked={task.completed}
         onChange={() => onToggleTask(task)}
       />
+      {/* Display task title, with styled class if completed */}
       <span className={task.completed ? "completed" : ""}>{task.title}</span>
 
       <div className="priority-wrapper">
+        {/* Priority indicator circle, toggles dropdown on click */}
         <div
           className="priority-indicator"
           style={{ backgroundColor: getPriorityColor() }}
-          onClick={() => setShowPriority(!showPriority)} // Toggle priority dropdown on click
+          onClick={() => setShowPriority(!showPriority)}
         />
+        {/* Priority selection dropdown, visible when showPriority is true */}
         {showPriority ? (
           <select
             value={task.priority}

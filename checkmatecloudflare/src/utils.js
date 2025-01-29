@@ -1,11 +1,9 @@
-// utils.js
-
 // Function to toggle completion of a task
 export const toggleTaskCompletion = (task) => {
     return { ...task, completed: !task.completed };
 };
   
-  // Function to filter tasks by status (all, completed, pending)
+// Function to filter tasks by status (all, completed, pending)
 export const filterTasks = (tasks, status) => {
     if (status === "completed") {
         return tasks.filter(task => task.completed);

@@ -1,45 +1,55 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const cors = require('cors');
-const authRoutes = require('./authentication/routes/authRoutes.js');
-const taskRoutes = require('./authentication/routes/taskRoutes.js');
-const app = express();
-const PORT = process.env.PORT || 5001;
+const express = require('express'); 
+const mongoose = require('mongoose'); 
+const session = require('express-session'); 
+const cors = require('cors'); 
+const authRoutes = require('./authentication/routes/authRoutes.js'); 
+const taskRoutes = require('./authentication/routes/taskRoutes.js'); 
 
-// Session setup
+// Initialize Express app
+const app = express();
+const PORT = process.env.PORT || 5001; // Use environment port or default to 5001
+
+// Session setup for user authentication
 app.use(
   session({
-    secret: 'your-secret-key', // Choose a strong secret key
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false, httpOnly: true, maxAge: 3600000}, // Use secure: true in production with HTTPS
+    secret: 'your-secret-key', 
+    resave: false, 
+    saveUninitialized: true, 
+    cookie: {
+      secure: false, 
+      httpOnly: true, 
+      maxAge: 3600000 
+    },
   })
 );
 
+// Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// CORS configuration if needed
+// CORS setup to allow requests from specific origin
 app.use(
   cors({
-    origin: 'http://localhost:3000',  
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed HTTP methods
-    credentials: true,}
-));
+    origin: 'http://localhost:3000', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true, // Enable cookies and authentication with CORS requests
+  })
+);
 
+// Register routes for authentication and task management
+app.use("/auth", authRoutes); 
+app.use("/tasks", taskRoutes); 
 
-// Routes
-app.use("/auth", authRoutes); // User authentication routes
-app.use("/tasks", taskRoutes); // Task-related routes
-
-// MongoDB connection
-mongoose.connect('mongodb://localhost:27017/checkmate', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
+// MongoDB connection setup
+mongoose.connect('mongodb://localhost:27017/checkmate', { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+})
+  .then(() => console.log('Connected to MongoDB')) // Log success message on successful connection
   .catch((err) => {
-    console.error("MongoDB connection error:", err);
+    console.error("MongoDB connection error:", err); // Log error message on failure
   });
 
-// Start server
+// Start the server and listen on the specified port
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`); // Confirmation message when the server starts
 });
